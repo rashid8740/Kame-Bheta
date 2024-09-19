@@ -1,5 +1,7 @@
+// app/layout.js
 import localFont from "next/font/local";
 import "./globals.css";
+import { ImageProvider } from "@/context/ImageContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,9 +23,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
       >
-        {children}
+        <ImageProvider>{children}</ImageProvider>
       </body>
     </html>
   );
