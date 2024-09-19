@@ -40,7 +40,7 @@ export default function ReportPharmacy() {
             <div className="flex justify-between items-center">
               <p>
                 You have successfully reported {pharmacyName} pharmacy in{" "}
-                {county}. Thank you for your help. Let's keep our health safe.
+                {county}. Thank you for your help. Lets keep our health safe.
               </p>
               <button
                 onClick={closePopup}
