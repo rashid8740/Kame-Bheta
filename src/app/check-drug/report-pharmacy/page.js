@@ -15,8 +15,12 @@ export default function ReportPharmacy() {
   const router = useRouter();
 
   const handleReport = () => {
-    // Here you would typically send the report to your backend
-    setIsReported(true);
+    if (pharmacyName && county && town) {
+      // Here you would typically send the report to your backend
+      setIsReported(true);
+    } else {
+      alert("Please fill in all fields before reporting.");
+    }
   };
 
   const handleCancel = () => {
@@ -35,8 +39,8 @@ export default function ReportPharmacy() {
           <div className="absolute top-0 left-0 right-0 bg-gray-100 p-4 rounded-lg shadow-md z-10">
             <div className="flex justify-between items-center">
               <p>
-                You have successfully reported {pharmacyName} pharmacy in {town}
-                . Thank you for your help. Let's keep our health safe.
+                You have successfully reported {pharmacyName} pharmacy in{" "}
+                {county}. Thank you for your help. Let's keep our health safe.
               </p>
               <button
                 onClick={closePopup}
