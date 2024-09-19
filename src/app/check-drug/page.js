@@ -1,4 +1,3 @@
-// app/check-drug/page.js
 "use client";
 
 import React, { useRef } from "react";
@@ -36,17 +35,19 @@ export default function CheckDrug() {
 
   const renderCameraMode = () => (
     <div className="flex flex-col md:flex-row md:space-x-8 items-start md:items-stretch">
-      <div className="md:w-1/2 flex items-start">
+      <div className="w-full md:w-1/2 flex items-start">
         <div className="w-full aspect-[4/3] relative">
           <Image
             src="/images/drug-package.png"
             alt="Example of drug packaging"
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            priority
             className="object-cover rounded-lg shadow-md"
           />
         </div>
       </div>
-      <div className="md:w-1/2 flex flex-col justify-between mt-6 md:mt-0">
+      <div className="w-full md:w-1/2 flex flex-col justify-between mt-6 md:mt-0">
         <div className="flex-grow">
           <p className="text-xl leading-relaxed">
             Please take a <strong className="text-black">clear</strong> and

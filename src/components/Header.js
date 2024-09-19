@@ -39,6 +39,7 @@ export default function Header() {
               alt="Beta Solution Logo"
               width={100}
               height={50}
+              style={{ height: "auto", width: "auto" }} // Ensure aspect ratio is preserved
             />
           </div>
           <nav className="hidden md:flex space-x-8">
