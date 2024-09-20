@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, Suspense } from "react";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import { useImage } from "@/context/ImageContext";
 
-export default function CheckDrug() {
+const ClientSideContent = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = new URLSearchParams(
+    typeof window !== "undefined" ? window.location.search : ""
+  );
   const mode = searchParams.get("mode") || "camera";
   const { setCapturedImage } = useImage();
   const fileInputRef = useRef(null);
@@ -108,11 +110,19 @@ export default function CheckDrug() {
   );
 
   return (
+    <main className="px-4 py-8 max-w-5xl mx-auto">
+      {mode === "gallery" ? renderGalleryMode() : renderCameraMode()}
+    </main>
+  );
+};
+
+export default function CheckDrug() {
+  return (
     <div className="min-h-screen bg-white text-black">
       <Header />
-      <main className="px-4 py-8 max-w-5xl mx-auto">
-        {mode === "gallery" ? renderGalleryMode() : renderCameraMode()}
-      </main>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ClientSideContent />
+      </Suspense>
     </div>
   );
 }

@@ -1,14 +1,20 @@
-// app/check-drug/preview/page.js
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Header from "@/components/Header";
 import { useImage } from "@/context/ImageContext";
 
 export default function PreviewPage() {
   const router = useRouter();
   const { capturedImage } = useImage();
+
+  useEffect(() => {
+    if (!capturedImage) {
+      router.push("/check-drug");
+    }
+  }, [capturedImage, router]);
 
   const handleBack = () => {
     router.push("/check-drug");
@@ -19,7 +25,6 @@ export default function PreviewPage() {
   };
 
   if (!capturedImage) {
-    router.push("/check-drug");
     return null;
   }
 
@@ -29,10 +34,13 @@ export default function PreviewPage() {
       <main className="px-4 py-8 max-w-5xl mx-auto">
         <div className="flex flex-col items-center">
           <div className="w-full max-w-md mb-8">
-            <img
+            <Image
               src={capturedImage}
               alt="Captured drug package"
-              className="w-full h-auto rounded-lg shadow-md"
+              width={500}
+              height={300}
+              layout="responsive"
+              className="rounded-lg shadow-md"
             />
           </div>
           <div className="flex space-x-4">

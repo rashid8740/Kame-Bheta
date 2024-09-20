@@ -1,4 +1,3 @@
-// app/check-drug/camera/page.js
 "use client";
 
 import React, { useRef, useEffect } from "react";
@@ -13,15 +12,22 @@ export default function CameraPage() {
   const { setCapturedImage } = useImage();
 
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        videoRef.current.srcObject = stream;
-      })
-      .catch((err) => console.error("Error accessing camera:", err));
+    let stream;
+
+    const setupCamera = async () => {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+      } catch (err) {
+        console.error("Error accessing camera:", err);
+      }
+    };
+
+    setupCamera();
 
     return () => {
-      const stream = videoRef.current?.srcObject;
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
       }
@@ -46,6 +52,7 @@ export default function CameraPage() {
           <video
             ref={videoRef}
             autoPlay
+            playsInline
             className="rounded-lg shadow-md mb-8"
           />
           <button

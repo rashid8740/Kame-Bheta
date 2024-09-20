@@ -1,8 +1,8 @@
-// app/check-drug/processing/page.js
 "use client";
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Header from "@/components/Header";
 import { useImage } from "@/context/ImageContext";
 
@@ -11,16 +11,19 @@ export default function ProcessingPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Simulate processing time
+    if (!capturedImage) {
+      router.push("/check-drug");
+      return;
+    }
+
     const timer = setTimeout(() => {
       router.push("/check-drug/details");
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [router]);
+  }, [capturedImage, router]);
 
   if (!capturedImage) {
-    router.push("/check-drug");
     return null;
   }
 
@@ -30,10 +33,13 @@ export default function ProcessingPage() {
       <main className="px-4 py-8 max-w-5xl mx-auto">
         <div className="flex flex-col items-center">
           <div className="w-full max-w-md mb-8">
-            <img
+            <Image
               src={capturedImage}
               alt="Captured drug package"
-              className="w-full h-auto rounded-lg shadow-md"
+              width={500}
+              height={300}
+              layout="responsive"
+              className="rounded-lg shadow-md"
             />
           </div>
           <div className="flex flex-col items-center">
